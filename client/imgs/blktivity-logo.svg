@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="129px" height="49px" viewBox="0 0 129 49" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>blktivity-logo</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="HomePage-Copy-2" transform="translate(-112.000000, -28.000000)">
+            <g id="blktivity-logo" transform="translate(110.000000, 26.000000)">
+                <text id="blktivity" font-family="Roboto-Regular, Roboto" font-size="36" font-weight="normal" fill="#828282">
+                    <tspan x="0" y="33">blktivity</tspan>
+                </text>
+                <path d="M123,17 C118.581722,17 115,13.6421356 115,9.5 C115,5.35786438 118.581722,2 123,2 C127.418278,2 131,5.35786438 131,9.5 C131,13.6421356 127.418278,17 123,17 Z M123,13 C125.209139,13 127,11.4329966 127,9.5 C127,7.56700338 125.209139,6 123,6 C120.790861,6 119,7.56700338 119,9.5 C119,11.4329966 120.790861,13 123,13 Z" id="Combined-Shape-Copy" fill="#363636"></path>
+                <path d="M107,51 C102.581722,51 99,47.6421356 99,43.5 C99,39.3578644 102.581722,36 107,36 C111.418278,36 115,39.3578644 115,43.5 C115,47.6421356 111.418278,51 107,51 Z M107,47 C109.209139,47 111,45.4329966 111,43.5 C111,41.5670034 109.209139,40 107,40 C104.790861,40 103,41.5670034 103,43.5 C103,45.4329966 104.790861,47 107,47 Z" id="Combined-Shape" fill="#323232"></path>
+            </g>
+        </g>
+    </g>
+</svg>

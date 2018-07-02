@@ -1,0 +1,34 @@
+
+
+.footer-container{
+  display: block;
+  max-width: 100%;
+  height: 300px;
+  width: 100%;
+}
+
+
+.footer-container__column{
+  display: block;
+  display: flex;
+  justify-content: space-around;
+}
+.footer-column{
+  margin-top: 40px;
+  
+  // background-color: pink;
+  // width: 200px;
+  // height: 200px;
+}
+.footer-column__content{
+  margin-top: 50px;
+  text-align: center;
+}
+
+.foot-content__header{
+
+}
+
+.foot-content__padding{
+  padding: 3px 0;
+}

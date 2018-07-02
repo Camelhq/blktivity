@@ -1,0 +1,90 @@
+
+
+
+.comment-section{
+  max-width: 900px;
+  margin: auto;
+  padding-top: 50px;
+}
+.overview-comment__container{
+  height: auto;
+  // padding-left: 5px;
+  // padding: 50px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+}
+
+.comment-content{
+  padding-left: 20px;
+}
+
+.comment-content__header{
+  padding-top: 50px;
+}
+
+.comment-content__body{
+
+}
+
+.comment-content__footer{
+  background-color: red;
+  // margin-top: 30px;
+  padding-bottom: 50px;
+  width: 100%;
+}
+
+.comment-text__box{
+  border-radius: 2px;
+  background-color: #fff;
+  color: #4d4d4d;
+  padding: 8px 12px;
+  // width: 100%;
+  height: 104px;
+}
+
+/**
+**
+** Have to add globe form to color it a bit
+**/
+
+.comment-text__forum{
+  padding-top: 20px;
+
+}
+.comment-metadata__comments{
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.comment-metadata{
+  display: flex;
+  // font-size: 16px;
+  height: 20px;
+  padding-top: 5px;
+  // font-weight: bold;
+}
+
+.comment-metadata__user{
+  // padding-left: 5px;
+  padding-right: 5px;
+  font-size: 13px;
+  font-weight: bold;
+}
+.comment-metadata__time{
+  padding-left: 5px;
+  padding-right: 5px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.forum-single__comment{
+  height: auto;
+  margin-top: 22px;
+  margin-left: 20px;
+  margin-right: 20px;
+  font-weight: bold;
+}
+
+.comment-container{
+
+  margin-bottom: 50px;
+}

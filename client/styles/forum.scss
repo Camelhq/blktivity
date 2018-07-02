@@ -1,0 +1,174 @@
+
+
+/**
+*
+* Home header
+**/
+.home-header{
+  max-width: 1200px;
+  // background-color: blue;
+  height: 260px;
+  margin: auto;
+  margin-top: 20px;
+}
+.forum-header__linkbar{
+  padding: 10px;
+}
+.home-header__description{
+  width: 750px;
+  // box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+  // background-color: green;
+  height: 150px;
+  margin: auto;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  // margin-left: 20px;
+  margin-top: 20px;
+  float: left;
+}
+.home-header__travel-image{
+  // background-image: url("../images/black-make-exploring.png" );
+  width: 370px;
+  height: 240px;
+  margin-top: 20px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+  // margin-right: 20px;
+  background-color: black;
+  // height: 200px;
+  border-radius: 5px;
+  float: right;
+}
+
+
+/**
+*
+* Forum Container
+**/
+
+.forum-container{
+  max-width: 750px;
+  width: 750px;
+  // height: 1000px;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  // background-color: red;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+  // margin: auto;
+}
+
+/**
+*
+* Forum Header
+**/
+.forum-header{
+  display: flex;
+}
+
+
+/**
+*
+* Forum Body
+**/
+
+/**
+*
+* Forum Posts
+**/
+.forum-group{
+  // margin-left: 55px;
+  // height: 100%;
+  // height: 60px;
+  font-weight: bold;
+
+}
+
+.forum-single__post{
+  // font-size: 24px;
+  max-width: 600px;
+  height: auto;
+  margin-top: 22px;
+  margin-left: 20px;
+  margin-right: 20px;
+  // padding-top: 5px;
+  // padding-bottom: 20px;
+  // background-color: red;
+  font-weight: bold;
+}
+
+.post-link{
+  max-width: 300px;
+  line-height: 1.2;
+  // height: 50px;
+  // padding-top: 5px;
+  // padding-bottom: 5px;
+  font-weight: bold;
+}
+
+.post-metadata{
+  display: flex;
+  font-size: 16px;
+  height: 20px;
+  padding-top: 5px;
+  // font-weight: bold;
+}
+.post-metadata__user{
+  padding-right: 5px;
+  font-size: 14px;
+  // background-color: yellow;
+  // font-weight: bold;
+}
+.post-metadata__time{
+  padding-left: 5px;
+  padding-right: 5px;
+  font-size: 14px;
+  // font-weight: bold;
+}
+.post-metadata__comments{
+  padding-left: 5px;
+  padding-right: 5px;
+  font-size: 14px;
+  // font-weight: bold;
+}
+
+
+
+
+/**
+*
+* Forum avatar
+**/
+
+
+/**
+*
+* Forum vote arrow
+**/
+
+
+/**
+*
+* Forum vote
+**/
+
+
+/**
+*
+* Forum vote
+**/
+
+/**
+*
+* Forum post data
+**/
+
+
+/**
+*
+* Forum post date
+**/
+
+
+/**
+*
+* Forum post comment
+**/
