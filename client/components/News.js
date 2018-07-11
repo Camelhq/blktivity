@@ -5,10 +5,10 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/styles.scss';
 
-import china from "../imgs/china.png";
-import newYork from "../imgs/New-York.png";
-import greece from "../imgs/Greece.png";
-import idk from "../imgs/IDK.png";
+// import china from "../imgs/china.png";
+// import newYork from "../imgs/New-York.png";
+// import greece from "../imgs/Greece.png";
+// import idk from "../imgs/IDK.png";
 
 const News = () => (
 
@@ -22,24 +22,24 @@ const News = () => (
             <div class="news-travel__card">
               <div class="news-card">
                 <div class="">
-                  <img src={china} class="news-card__image"/>
+                  {/* <img src={china} class="news-card__image"/> */}
                 </div>
               </div>
               <div class="news-card">
                 <div class="">
-                  <img src={newYork} class="news-card__image"/>
+                  {/* <img src={newYork} class="news-card__image"/> */}
                 </div>
               </div>
             </div>
             <div class="news-travel__card">
               <div class="news-card">
                 <div class="">
-                  <img src={greece} class="news-card__image"/>
+                  {/* <img src={greece} class="news-card__image"/> */}
                 </div>
               </div>
               <div class="news-card">
                 <div class="">
-                  <img src={idk} class="news-card__image"/>
+                  {/* <img src={idk} class="news-card__image"/> */}
                 </div>
               </div>
             </div>

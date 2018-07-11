@@ -19,9 +19,9 @@ class GetPost extends Component {
   componentWillMount() {
     this.props.getPosts();
   }
-  componentWillReceiveProps(){
-    this.props.getPosts();
-  }
+  // componentWillReceiveProps(){
+  //   this.props.getPosts();
+  // }
 
   /**
   *

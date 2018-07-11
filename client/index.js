@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { compose, createStore, applyMiddleware } from 'redux';
-import  { Provider } from 'react-redux';
+import { Provider as ReduxProvider } from "react-redux";
 import thunk from 'redux-thunk';
 import { BrowserRouter as Router,
 	Route,
@@ -27,10 +27,11 @@ import GetPost from './components/GetPost';
 
 
 
-const store = createStore(reducers, compose(
-	applyMiddleware(thunk),
-	window.devToolsExtension ? window.devToolsExtension() : f => f
-))
+// const store = createStore(reducers, compose(
+// 	applyMiddleware(thunk),
+// 	window.devToolsExtension ? window.devToolsExtension() : f => f
+// ))
+const store = createStore( window.REDUX_DATA );
 
 const checkAuth = () => {
 	const token = localStorage.getItem('token');
@@ -66,9 +67,9 @@ const AuthRoute = ({ component: Component, ...rest }) => (
 
 const app = document.getElementById('app');
 
-
-ReactDOM.render(
-  <Provider store={store}>
+const renderMethod = module.hot ? ReactDOM.render : ReactDOM.hydrate;
+renderMethod(
+  <ReduxProvider store={store}>
   	<Router>
       <Switch>
         <Route exact path="/" component={App}/>
@@ -79,6 +80,6 @@ ReactDOM.render(
         <Route component={NotFound}/>
       </Switch>
   	</Router>
-  </Provider>
+  </ReduxProvider>
         ,
     app);

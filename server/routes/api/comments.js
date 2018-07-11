@@ -15,7 +15,7 @@ module.exports = (app) => {
         creator: userId,
         posts: postId
       })
-      console.log(comment)
+      // console.log(comment)
 
       comment.save().then((newComment) => {
         Post.findByIdAndUpdate(

@@ -14,6 +14,20 @@ const config = require('../config/config');
 const passportConfig = require('../config/passport');
 const webpackConfig = require('../webpack.config');
 
+var babel = require("@babel/core");
+import React from "react";
+import { Provider as ReduxProvider } from "react-redux";
+import { compose, createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import { renderToString } from "react-dom/server";
+import { StaticRouter } from "react-router-dom";
+import App from "../client/components/App";
+
+import reducers from '../client/reducers/index';
+
+
+const store = createStore(reducers, compose(applyMiddleware(thunk)))
+// compose(applyMiddleware(thunk))(createStore)(duedates)
 const isDev = process.env.NODE_ENV !== 'production';
 const port  = process.env.PORT || 8080;
 
@@ -39,6 +53,43 @@ app.use(express.json());
 app.use(passport.initialize())
 require('../config/passport')(passport);
 
+//set up server side rendering
+app.get( "*", ( req, res ) => {
+    const context = { };
+    const jsx = (
+      <ReduxProvider store={ store }>
+        <StaticRouter context={ context } location={ req.url }>
+          <App />
+        </StaticRouter>
+      </ReduxProvider>
+     );
+    const reactDom = renderToString( jsx );
+
+    const reduxState = store.getState()
+
+    res.writeHead( 200, { "Content-Type": "text/html" } );
+    res.end( htmlTemplate( reactDom, reduxState ) );
+});
+
+function htmlTemplate( reactDom,  reduxState) {
+    return `
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="utf-8">
+            <title>React SSR</title>
+        </head>
+
+        <body>
+            <div id="app">${ reactDom }</div>
+            <script>
+                window.REDUX_DATA = ${ JSON.stringify( reduxState ) }
+            </script>
+            <script src="./main.js"></script>
+        </body>
+        </html>
+    `;
+}
 
 
 // API routes
@@ -76,7 +127,7 @@ if (isDev) {
 
 app.listen(port, '0.0.0.0', (err) => {
   if (err) {
-    console.log(err);
+    console.log("This is the error from listening on port...." + err);
   }
 
   console.info('>>> 🌎 Open http://0.0.0.0:%s/ in your browser.', port);

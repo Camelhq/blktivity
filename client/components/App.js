@@ -7,9 +7,9 @@ import NavBar from './NavBar';
 import News from './News';
 import Footer from './Footer';
 import '../styles/styles.scss';
-import img from "../imgs/exploring.png";
+// import img from "../imgs/exploring.png";
 
-class App extends Component {
+export default class App extends React.Component{
   constructor(props) {
     super(props);
   }
@@ -25,7 +25,7 @@ class App extends Component {
             <div>Blktivity help individuals work and travel the world without sitting behind a desk.</div>
           </div>
           <div >
-            <img src={img} class="home-header__travel-image"/>
+            {/* <img src={img} class="home-header__travel-image"/> */}
           </div>
         </div>
         <div class="flex-box home-content">
@@ -41,4 +41,4 @@ class App extends Component {
 }
 
 
-export default App;
+// export default App;
