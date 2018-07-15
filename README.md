@@ -1,4 +1,4 @@
-# MERN-boilerplate
+# Blktivity for Travel
 
 This is a boilerplate project using the following technologies:
 - [React](https://facebook.github.io/react/) and [React Router](https://reacttraining.com/react-router/) for the frontend
@@ -31,3 +31,9 @@ Development (Webpack dev server) mode:
 ```shell
 npm run start:dev
 ```
+
+
+## TODO
+- Serverside rendering??
+- How to solve frontend SEO Matters
+- clean up security.
