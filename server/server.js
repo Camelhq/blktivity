@@ -20,14 +20,14 @@ import { Provider as ReduxProvider } from "react-redux";
 import { compose, createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { renderToString } from "react-dom/server";
-import { StaticRouter } from "react-router-dom";
+import { StaticRouter, matchPath } from "react-router-dom";
 import App from "../client/components/App";
 
-import reducers from '../client/reducers/index';
+// import reducers from '../client/reducers/index';
 
+// const store = createStore(reducers, compose(applyMiddleware(thunk)))
+// const store = createStore( )
 
-const store = createStore(reducers, compose(applyMiddleware(thunk)))
-// compose(applyMiddleware(thunk))(createStore)(duedates)
 const isDev = process.env.NODE_ENV !== 'production';
 const port  = process.env.PORT || 8080;
 
@@ -54,42 +54,79 @@ app.use(passport.initialize())
 require('../config/passport')(passport);
 
 //set up server side rendering
-app.get( "*", ( req, res ) => {
-    const context = { };
-    const jsx = (
-      <ReduxProvider store={ store }>
-        <StaticRouter context={ context } location={ req.url }>
-          <App />
-        </StaticRouter>
-      </ReduxProvider>
-     );
-    const reactDom = renderToString( jsx );
+// app.get( "*", ( req, res ) => {
+//     const context = { };
+//     const jsx = (
+//       <ReduxProvider store={ store }>
+//         <StaticRouter context={ context } location={ req.url }>
+//           <App />
+//         </StaticRouter>
+//       </ReduxProvider>
+//      );
+//     const reactDom = renderToString( jsx );
+//
+//     const reduxState = store.getState()
+//
+//     res.writeHead( 200, { "Content-Type": "text/html" } );
+//     res.end( htmlTemplate( reactDom, reduxState ) );
+// });
+//
+//
+// function htmlTemplate( reactDom,  reduxState) {
+//     return `
+//         <!DOCTYPE html>
+//         <html>
+//         <head>
+//             <meta charset="utf-8">
+//             <title>React SSR</title>
+//         </head>
+//
+//         <body>
+//             <div id="app">${ reactDom }</div>
+//             <script>
+//                 window.REDUX_DATA = ${ JSON.stringify( reduxState ) }
+//             </script>
+//             <script src="./bundle.js"></script>
+//         </body>
+//         </html>
+//     `;
+// }
 
-    const reduxState = store.getState()
 
-    res.writeHead( 200, { "Content-Type": "text/html" } );
-    res.end( htmlTemplate( reactDom, reduxState ) );
-});
+// app.get( "/*", ( req, res ) => {
+//     const context = { };
+//     const store = createStore( );
+//
+//     store.dispatch( initializeSession( ) );
+//
+//     const dataRequirements =
+//         routes
+//             .filter( route => matchPath( req.url, route ) ) // filter matching paths
+//             .map( route => route.component ) // map to components
+//             .filter( comp => comp.serverFetch ) // check if components have data requirement
+//             .map( comp => store.dispatch( comp.serverFetch( ) ) ); // dispatch data requirement
+//
+//     Promise.all( dataRequirements ).then( ( ) => {
+//         const jsx = (
+//             <ReduxProvider store={ store }>
+//                 <StaticRouter context={ context } location={ req.url }>
+//                     <Layout />
+//                 </StaticRouter>
+//             </ReduxProvider>
+//         );
+//         const reactDom = renderToString( jsx );
+//
+//         const reduxState = store.getState( );
+//
+//         res.writeHead( 200, { "Content-Type": "text/html" } );
+//         res.end( htmlTemplate( reactDom, reduxState ) );
+//     } );
+// } );
 
-function htmlTemplate( reactDom,  reduxState) {
-    return `
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <meta charset="utf-8">
-            <title>React SSR</title>
-        </head>
 
-        <body>
-            <div id="app">${ reactDom }</div>
-            <script>
-                window.REDUX_DATA = ${ JSON.stringify( reduxState ) }
-            </script>
-            <script src="./main.js"></script>
-        </body>
-        </html>
-    `;
-}
+
+
+
 
 
 // API routes

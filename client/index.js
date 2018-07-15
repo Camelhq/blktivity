@@ -27,11 +27,11 @@ import GetPost from './components/GetPost';
 
 
 
-// const store = createStore(reducers, compose(
-// 	applyMiddleware(thunk),
-// 	window.devToolsExtension ? window.devToolsExtension() : f => f
-// ))
-const store = createStore( window.REDUX_DATA );
+const store = createStore(reducers, compose(
+	applyMiddleware(thunk),
+	window.devToolsExtension ? window.devToolsExtension() : f => f
+))
+// const store = createStore( window.REDUX_DATA );
 
 const checkAuth = () => {
 	const token = localStorage.getItem('token');
@@ -68,7 +68,9 @@ const AuthRoute = ({ component: Component, ...rest }) => (
 const app = document.getElementById('app');
 
 const renderMethod = module.hot ? ReactDOM.render : ReactDOM.hydrate;
-renderMethod(
+//put this back where you got it!
+//renderMethod
+ ReactDOM.render(
   <ReduxProvider store={store}>
   	<Router>
       <Switch>
