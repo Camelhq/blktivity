@@ -3,13 +3,16 @@ const Post = require('../../models/Post');
 const Comment = require('../../models/Comments');
 const CheckAuth = require('../../models/check-auth');
 const passport = require('passport')
+const express = require('express');
+const router = express.Router();
 /*********************************************
   this video goes over the API design:
   https://www.youtube.com/watch?v=gtMZ-WiSrs8
 *********************************************/
-module.exports = (app) => {
+
+
   //post
-  app.post('/api/posts', passport.authenticate('jwt', { session: false }), (req, res, next) => {
+  router.post('/', passport.authenticate('jwt', { session: false }), (req, res, next) => {
     // console.log(req.body)
     const { title, text, userId } = req.body;
     User.findOne(req.user._id).then((user) =>{
@@ -29,7 +32,8 @@ module.exports = (app) => {
   });
 
   //Get all with the creator
-  app.get('/api/posts', (req, res, next) => {
+  router.get('/', (req, res, next) => {
+
     Post.find({}).populate({
            path: 'creator',
            select: 'userName createdAt -_id' //you can use -_id to get rid of the ID
@@ -38,6 +42,7 @@ module.exports = (app) => {
            path: 'comments',
          })
     .then((post) => {
+      // console.log(post)
       res.json(post)
     })
   });
@@ -46,7 +51,7 @@ module.exports = (app) => {
   /*
   This gets a single comment from a post
   */
-  app.get('/api/posts/:id', (req, res, next) => {
+  router.get('/:id', (req, res, next) => {
     // console.log(req.params)
      Post.findById(req.params.id)
      .populate({
@@ -65,10 +70,6 @@ module.exports = (app) => {
        .catch((err) => next(err));
    });
 
-   /*
-    comments arent posting under its post ID. June 2
-    check out for some guildence info:
-    https://github.com/keithweaver/MERN-boilerplate/blob/master/server/routes/api/counters.js
-   */
 
-}
+
+module.exports = router;

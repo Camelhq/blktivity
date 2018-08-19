@@ -45,7 +45,10 @@ nav {
 			}
 		}
 	}
-
+.logo-outline{
+  float: left;
+  text-align: left; 
+}
 	// Navbar is set to default with the "hamburger" and links on the left
 	// side of the screen. To move to the right of the screen, simply
 	// change the three "float: Left;" references to read "float: right;".

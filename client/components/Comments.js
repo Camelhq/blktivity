@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom';
-// import GetComments from './GetComments';
+import Moment from 'react-moment';
 import { getOnePost, getComments, userProfile, comment } from '../actions/index'
 import Footer from './Footer';
 import NavBar from './NavBar';
@@ -20,13 +20,14 @@ class Comments extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-    componentWillMount(){
+    componentDidMount(){
       this.props.userProfile();
       this.props.getComments();
       this.props.getOnePost(this.props.match.params.id);
     }
 
-    componentWillReceiveProps(){
+    componentWillReceiveProps(nextProps){
+      // nextProps.getOnePost(this.props.match.params.id)
       // this.props.getOnePost(this.props.match.params.id);
     }
 
@@ -63,10 +64,10 @@ class Comments extends Component {
     return <div>{this.props.post.post.comments.map((data) => {
       // console.log(data)
       return <div class="forum-single__comment" key={data._id}>
-                <div class="comment-metadata__comments">{data.text}</div>
+                <div class="comment-metadata__comments font-dark">{data.text}</div>
                 <div class="comment-metadata">
-                  <div class="comment-metadata__user">By: {data.creator.userName}</div>
-                  <div class="comment-metadata__time">{data.createdAt}</div>
+                  <div class="comment-metadata__user font-dark">By: {data.creator.userName}</div>
+                  <div class="comment-metadata__time font-dark"><Moment fromNow>{data.createdAt}</Moment></div>
                 </div>
             </div>
     })}</div>
@@ -75,7 +76,7 @@ class Comments extends Component {
 
   render() {
     const val = this.props.post.post.comments;
-    console.log(this.props.post.post)
+    // console.log(this.props.post.post)
 
     if(this.props.post.post.comments == null){
       return <div></div>
@@ -87,16 +88,21 @@ class Comments extends Component {
           <div class="overview-comment__container">
             <div class="comment-content">
               <div class="comment-content__header">
-                <h1>this is the view Comments page</h1>
+                <h1 class="font-dark">{this.props.post.post.title}</h1>
               </div>
               <div class="comment-content__body">
-                <div>{this.props.post.post.title}</div>
-                <div>{this.props.post.post.text}</div>
-                <div>{this.props.post.post.createdAt}</div>
+                <div class="font-dark">{this.props.post.post.text}</div>
+                <div class="font-dark"><Moment fromNow>{this.props.post.post.createdAt}</Moment></div>
               </div>
-              <div class="comment-content__footer">
+
+            </div>
+            <div class="comment-content__footer">
+              <div class="user-comment__profile">
                 {/* <div>{Object.keys(this.props.post.post.creator.userName)}</div> */}
-                <h1>{val.length}</h1>
+                {/* <div>This is where profile pic at</div> */}
+              </div>
+              <div class="comment_numberOf_replies">
+                <div class="font-dark">{val.length} replies</div>
               </div>
             </div>
           </div>
@@ -106,7 +112,7 @@ class Comments extends Component {
               <input onChange={this.text} type="text" name="username" class="comment-text__box"/>
             </div>
             <div>
-              <input type="submit" class="global-btn shady-purple" value="POST COMMENT" />
+              <input type="submit" class="global-btn shady-purple font-white" value="POST COMMENT" />
             </div>
             {/* <button>Text</button> */}
           </form>

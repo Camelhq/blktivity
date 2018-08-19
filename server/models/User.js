@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 const UserSchema = new mongoose.Schema({
   userName: {
     type: String,
-    default: ''
+    required: true
   },
   email: {
     type: String,
@@ -14,12 +14,11 @@ const UserSchema = new mongoose.Schema({
     match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
   },
   avatar: {
-    type: String,
-    required: false
+    type: String
   },
   password: {
     type: String,
-    default: ''
+    required: true
   },
   isDeleted: {
     type: Boolean,

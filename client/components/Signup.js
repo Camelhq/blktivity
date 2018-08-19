@@ -10,7 +10,7 @@ const Signup = () => (
   <NavBar />
   <div class="sign-in__container">
     <div class="sign-in__form">
-      <h1>sign up page</h1>
+      <h1>Sign up</h1>
       <SignUpForm  />
       <Link to="/">Go home</Link>
       <Link to="/signin">Sign in</Link>

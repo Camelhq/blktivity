@@ -5,8 +5,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/styles.scss';
 import { connect } from 'react-redux'
-
 import { logoutUser, userProfile } from '../actions/index'
+import logo from "../imgs/blktivity-logo.png"
 
 class NavBar extends Component {
   constructor(props) {
@@ -29,14 +29,22 @@ class NavBar extends Component {
     event.preventDefault();
     this.props.logoutUser();
   }
+  onClickLogOut(event){
+    event.preventDefault();
+    this.props.logoutUser();
+  }
 
   render() {
-    console.log(this.props)
+    // console.log(this.props)
 
     const authLinks = (
       <div className="navWide">
         <div className="wideDiv">
+          <div class="logo-outline">
+            <Link to="/"><img alt="blktivity" class="blktivity-logo" src="../blktivity-logo-svg.svg" /></Link>
+          </div>
           <Link to="/">Community</Link>
+          <Link to="/profile">Profile</Link>
           <a href="" onClick={this.onClickLogOut}>Logout</a>
           {/* <img src={user.avatar} alt={user.name} title="You must have a Gravtar connected to your email to display an image"/> */}
         </div>
@@ -45,7 +53,12 @@ class NavBar extends Component {
 
     const guestLinks = (
       <div className="navWide">
+
         <div className="wideDiv">
+          <div class="logo-outline">
+            <Link to="/"><img alt="blktivity" class="blktivity-logo" src="../blktivity-logo-svg.svg" /></Link>
+          </div>
+
           <Link to="/">Community</Link>
           {/* <Link to="/skills">Skills</Link> */}
           {/* <Link to="/chat">Chat</Link> */}
@@ -60,14 +73,14 @@ class NavBar extends Component {
       <>
         <nav>
           {this.props.setAuth.authenticated ? authLinks : guestLinks}
-				<div className="navNarrow">
+				{/* <div className="navNarrow">
 					<i className="fa fa-bars fa-2x" onClick={this.burgerToggle}></i>
 					<div className="narrowLinks">
 						<a href="#" onClick={this.burgerToggle}>Link 1</a>
 						<a href="#" onClick={this.burgerToggle}>Link 2</a>
 						<a href="#" onClick={this.burgerToggle}>Link 3</a>
 					</div>
-				</div>
+				</div> */}
 			</nav>
       </>
     );

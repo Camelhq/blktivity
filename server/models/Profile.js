@@ -5,6 +5,7 @@ var ProfileSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
   creator: { type: Schema.Types.ObjectId, ref: 'User' },
   handle: { type: String, required: true, max: 40 },
+  file: { type: String },
   website: { type: String },
   company: { type: String },
   location: { type: String },

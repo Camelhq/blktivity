@@ -3,8 +3,7 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux'
 import GetPost from './GetPost';
-import { forumPost, userProfile } from '../actions/index'
-
+import { forumPost, userProfile, getPosts } from '../actions/index'
 import '../styles/styles.scss';
 
 class Home extends Component {
@@ -20,6 +19,31 @@ class Home extends Component {
     this.text = this.text.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+  //need to go back to the Reactjs life cycles
+  // I dont like the way componentWillMount and componentDidUpdate
+  //has to be here in both. never seen it before.
+
+  componentDidMount() {
+    this.props.getPosts();
+    // console.log("componentDidMount")
+  }
+  // componentDidUpdate(nextProps){
+  //   // console.log("componentDidUpdate")
+  //   console.log(nextProps)
+  //   // console.log(this.props.forumPost)
+  //   if (nextProps.posts.loading === true) {
+  //     this.props.getPosts()
+  //   }
+  //   // `nextProps` is the new props, while `this.props` are the old ones.
+  //     // It is entirely possible that the new `playerName` is the same as the old one.
+  // }
+
+  /**
+  *
+  * Have to figure out when a user clicks on the title link
+  * it goes to the posts' body.
+  * Need to use pass thru props
+  **/
 
 
   title(event){
@@ -36,7 +60,9 @@ class Home extends Component {
   handleSubmit(event) {
     event.preventDefault()
     event.target.reset();
+    //we need to get the user  => const {user} = this.props.setAuth...
     const post = {
+      //add user here name: user.username
       title: this.state.title,
       text: this.state.text,
       userId: this.props.setAuth.user.userId
@@ -46,23 +72,32 @@ class Home extends Component {
 
 
   render() {
+    // console.log(this.props)
+    const descriptionHeader = (
+      <form class="forum-header__linkbar" onSubmit={this.handleSubmit}>
+        <input onChange={this.title} type="text" name="username" class="global-form" placeholder="title"/>
+        <input onChange={this.text} type="text" name="username" class="global-form" placeholder="text"/>
+        <button>Text</button>
+      </form>
+    )
+
+    const noHeader = (
+      <div class="signIn-forum_button">
+        <input type="submit" class="home-btn shady-purple font-white" value="Sign In" />
+      </div>
+    )
+
     return (
       <div>
         <section>
           <div class="forum-container">
             <div class="forum-header">
               {/* <div class="forum-header__linkbar"> */}
-                <h3 class="forum-header__linkbar">Top</h3>
-                <h3 class="forum-header__linkbar">Newest</h3>
-                <h3 class="forum-header__linkbar">Week</h3>
-                <h3 class="forum-header__linkbar">Month</h3>
-              {/* </div> */}
-              <form class="forum-header__linkbar" onSubmit={this.handleSubmit}>
-                {/* {this.state.error && <ErrorAlert>Incorrect post try again</ErrorAlert>} */}
-                <input onChange={this.title} type="text" name="username" class="forum-header__linkbar"/>
-                <input onChange={this.text} type="text" name="username" class="forum-header__linkbar"/>
-                <button>Text</button>
-              </form>
+                <h3 class="forum-header__linkbar font-dark">Top</h3>
+                <h3 class="forum-header__linkbar font-dark">Newest</h3>
+                <h3 class="forum-header__linkbar font-dark">Week</h3>
+                <h3 class="forum-header__linkbar font-dark">Month</h3>
+              {this.props.setAuth.authenticated ? descriptionHeader : noHeader}
             </div>
             <div>
               <GetPost />
@@ -78,12 +113,14 @@ class Home extends Component {
 
 const mapStateToProps = state => {
   return {
-    setAuth: state.setAuth
+    setAuth: state.setAuth,
+    posts: state.posts
   }
 }
 
 const mapDispatchToProps = {
-    forumPost
+    forumPost,
+    getPosts
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)

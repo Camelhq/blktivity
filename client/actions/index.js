@@ -50,7 +50,7 @@ export function SignInUser({ email, password }) {
   }).then(function(response) {
 
     if(response.status === 200){
-      // console.log(response.data.token)
+
        localStorage.setItem('token', response.data.token);
       //  axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');
        setAuthToken(response.data.token)
@@ -58,6 +58,7 @@ export function SignInUser({ email, password }) {
 
       // decode token to get user data
       const decoded = jwt_decode(response.data.token)
+      // console.log(decoded)
       //set current user
        dispatch(setCurrentUser(decoded));
        window.location.href = CLIENT_ROOT_URL + '/';
@@ -81,7 +82,7 @@ export function SignInUser({ email, password }) {
     dispatch({ type: UNAUTH_USER });
     localStorage.removeItem('token', { path: '/' });
     setAuthToken(false)
-    // dispatch(setCurrentUser({}));
+    dispatch(setCurrentUser({}));
     window.location.href = CLIENT_ROOT_URL + '/';
   }
  }
@@ -93,12 +94,12 @@ export function SignInUser({ email, password }) {
      email: email,
      password: password
    }).then(function(response) {
-    //  console.log(response.data.message)
+    //  console.log(response)
      if(response.status === 200){
 
         localStorage.setItem('token', response.data.token);
         // dispatch({ type: AUTH_USER });
-        window.location.href = CLIENT_ROOT_URL + '/';
+        window.location.href = CLIENT_ROOT_URL + '/profile';
       }
    }).catch((error) => {
       errorHandler(dispatch, error.response, AUTH_ERROR)
@@ -111,19 +112,22 @@ export function SignInUser({ email, password }) {
 
   export const FETCH_PROFILE = 'FETCH_PROFILE',
                RECEIVE_PROFILE = 'RECEIVE_PROFILE',
-               FAILED_PROFILE = 'FAILED_PROFILE';
+               CLEAR_PROFILE = 'CLEAR_PROFILE';
 
   export function userProfile() {
+    //this should be profile loading action
+    // dispatch(setProfileLoading());
    return function(dispatch) {
 
-    axios.get(`${SIGN_IN}/api/dashboard`, {
+    axios.get(`${SIGN_IN}/api/profile`, {
       headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token')}
       }).then(function(response) {
         // console.log(response.data)
-         dispatch(receiveProfile(response));
+         dispatch(receiveProfile(response.data));
       }).catch((error) => {
-        // console.log(error.response)
-       errorHandler(dispatch, error.response, AUTH_ERROR)
+        // console.log(error)
+        dispatch({type: RECEIVE_PROFILE, data: {}});
+      //  errorHandler(dispatch, error.response, AUTH_ERROR)
      });
    }
 }
@@ -133,6 +137,56 @@ export function SignInUser({ email, password }) {
        data: data
      }
    }
+   const setProfileLoading = function setProfileLoading() {
+     return {
+       type: FETCH_PROFILE
+     }
+   }
+
+   export function getProfileByHandle(handle) {
+    return function(dispatch) {
+     axios.get(`${SIGN_IN}/api/profile/handle/${handle}`, {
+       headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token')}
+       }).then(function(response) {
+         // console.log(response.data)
+          dispatch(receiveProfile(response.data));
+       }).catch((error) => {
+         // console.log(error)
+         dispatch({type: RECEIVE_PROFILE, data: null});
+       //  errorHandler(dispatch, error.response, AUTH_ERROR)
+      });
+    }
+ }
+
+
+ //{headers: {'Content-Type': 'multipart/form-data',}
+   export function createProfile({ handle, company, website, location, instagram, facebook, twitter, bio }) {
+    return function(dispatch) {
+     axios.post(`${SIGN_IN}/api/profile`, {
+       handle: handle,
+      //  file: fd,
+       company: company,
+       website: website,
+       location: location,
+       instagram: instagram,
+       facebook: facebook,
+       twitter: twitter,
+       bio: bio
+
+    }).then(function(response) {
+      //  console.log(response)
+       if(response.status === 200){
+        //  console.log(response.data)
+         //  dispatch({ type: AUTH_USER });
+         dispatch(addPost(response));
+        //  window.location.href = CLIENT_ROOT_URL + '/profile';
+        }
+     }).catch((error) => {
+      //  console.log(error.response)
+        errorHandler(dispatch, error.response, AUTH_ERROR)
+      });
+      }
+    }
 
 
 export function protectedTest() {
@@ -191,7 +245,7 @@ export function getPosts() {
    }
  }
 
-
+export const ADD_POST = 'ADD_POST';
  // "userId": "5b1329e1ab92d194f5dc948c"
  export function forumPost({ title, text, userId }) {
   return function(dispatch) {
@@ -202,14 +256,20 @@ export function getPosts() {
    }).then(function(response) {
      if(response.status === 200){
        //  dispatch({ type: AUTH_USER });
-      //  dispatch(PostPost(response.data));
+       dispatch(addPost(response));
+      //  dispatch(addPost(response.data));
       }
    }).catch((error) => {
     //  console.log(error.response)
       errorHandler(dispatch, error.response, AUTH_ERROR)
     });
     }
-
+  }
+  const addPost = function addPost(data) {
+    return {
+      type: ADD_POST,
+      data: data
+    }
   }
 
  /********************

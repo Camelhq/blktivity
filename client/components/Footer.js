@@ -18,7 +18,8 @@ class Footer extends Component {
               <div class="footer-column__content">
                 <h1 class="foot-content__header">About Us</h1>
                 <div class="foot-content__padding">
-                  blktivity is for individuals to travela and connect with each other.
+                  blktivity is owned and operated by <a href="https://camelhq.com">CamelHQ</a>
+                  <br></br>for individuals to travel and connect with each other.
                 </div>
                 <div class="foot-content__padding">terms</div>
                 <div class="foot-content__padding">Privacy</div>
@@ -36,7 +37,7 @@ class Footer extends Component {
             <div class="footer-column__content">
               <h1 class="foot-content__header">Business</h1>
               <div class="foot-content__padding">About Us</div>
-              <div class="foot-content__padding">twitter</div>
+              <div class="foot-content__padding"><a href="https://twitter.com/blktivity">Twitter</a></div>
               <div class="foot-content__padding">Partners</div>
             </div>
           </div>

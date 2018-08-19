@@ -62,7 +62,7 @@ class Signin extends Component {
               <div>Password:</div>
               <input onChange={this.password} type="password" name="username" class="global-form" placeholder="Enter Password"/>
             </div>
-            <input type="submit" class="global-btn shady-purple" value="Sign In" />
+            <input type="submit" class="global-btn shady-purple font-white" value="Sign In" />
           </form>
           <div>
             <div class="">Did you forget you password?</div>

@@ -22,8 +22,10 @@ import Signin from './components/Signin';
 import Profile from './components/Profile';
 import Comments from './components/Comments';
 import GetPost from './components/GetPost';
-
-// import './styles/styles.scss';
+import CreateProfile from './components/CreateProfile';
+import EditProfile from './components/EditProfile';
+import ShowProfileURL from './components/ShowProfileURL';
+import './styles/styles.scss';
 
 
 
@@ -79,6 +81,9 @@ const renderMethod = module.hot ? ReactDOM.render : ReactDOM.hydrate;
 				<Route exact path="/signin" component={Signin}/>
 				<Route exact path="/posts/:id" component={Comments}/>
 				<AuthRoute exact path="/profile" component={Profile}/>
+				<AuthRoute exact path="/create-profile" component={CreateProfile}/>
+				<AuthRoute exact path="/edit-profile" component={EditProfile}/>
+				<Route exact path="/profile/:handle" component={ShowProfileURL}/>
         <Route component={NotFound}/>
       </Switch>
   	</Router>

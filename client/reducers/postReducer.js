@@ -1,4 +1,4 @@
-import { RECEIVE_POSTS, FETCH_POSTS, FAILED_POSTS } from '../actions/index'
+import { RECEIVE_POSTS, FETCH_POSTS, FAILED_POSTS, ADD_POST } from '../actions/index'
 
 const INITIAL_STATE = {
       posts: [],
@@ -8,6 +8,10 @@ const INITIAL_STATE = {
 
 export default function posts(state = INITIAL_STATE, action) {
   switch (action.type) {
+    case ADD_POST:
+    return {...state,
+      posts: [action.data.data, ...state.posts]
+    };
     case FETCH_POSTS:
     return {...state,
       posts: [],

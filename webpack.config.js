@@ -2,14 +2,19 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = {
   entry: ['./client/index.js', './client/styles/styles.scss'],
-  devtool: 'inline-source-map',
-  mode: 'development',
+  devtool: 'cheap-module-source-map',
+  mode: 'production',
   output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname,'dist/*.*'),
+    filename: '[name].[chunkhash].js',
+    publicPath: '/'
+  },
+  performance: {
+    hints: false
   },
    module: {
    rules: [
@@ -36,25 +41,44 @@ module.exports = {
        ],
      },
      {
-      test: /\.(png|svg|jpg|gif)$/,
-      use: [
-        'file-loader'
-      ]
-    }
+       test: /\.(png|jpg|svg|gif)$/,
+       use: [
+         'file-loader',
+         {loader: 'image-webpack-loader', options:{name: '[path][name].[ext]', outputPath: 'imgs/'}},
+       ]
+     },
+    // { test: /\.json$/, loader: 'json-loader' }
    ]
  },
- devServer: {
-   port: 3000,
-   open: false,
+ node: {
+   console: false,
+   fs: 'empty',
+   net: 'empty',
+   tls: 'empty'
  },
  plugins: [
   new CleanWebpackPlugin(['dist']),
   new HtmlWebpackPlugin({
-    template: './client/index.html'
-    // favicon: './public/favicon.ico'
+    template: './client/index.html',
+    filename: 'index.html',
+    inject: 'body',
+    minify: {
+      collapseWhitespace: true,
+      collapseInlineTagWhitespace: true,
+      removeComments: true,
+      removeRedundantAttributes: false
+    },
+    hash: true
   }),
   new MiniCssExtractPlugin({
       filename: "dist/[name].css",
   }),
-],
+  new CompressionPlugin({
+   // asset: "[path].gz[query]",
+   // algorithm: "gzip",
+   test: /\.js$|\.css$|\.html$|\.eot?.+$|\.ttf?.+$|\.woff?.+$|\.svg?.+$/,
+   threshold: 10240,
+   minRatio: 0.8
+  })
+  ],
 };

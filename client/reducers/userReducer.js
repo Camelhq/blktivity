@@ -1,26 +1,30 @@
-import { FETCH_PROFILE, RECEIVE_PROFILE, FAILED_PROFILE } from '../actions/index'
+import { FETCH_PROFILE, RECEIVE_PROFILE, CLEAR_PROFILE } from '../actions/index'
 
 
 const INITIAL_STATE = {
       user: null,
-      fetched: false,
+      users: null,
+      loading: false,
 }
 
 export default function user(state = INITIAL_STATE, action) {
   switch (action.type) {
     case FETCH_PROFILE:
     return {
-      user: null,
-  		fetched: false,
+      ...state,
+  		loading: true,
     };
-    case FAILED_PROFILE:
-     return {
-       fetched: false
-     };
-     case RECEIVE_PROFILE:
-     return {
-			user: action.data.data,
-			fetched: true
+    case RECEIVE_PROFILE:
+    return {
+      ...state,
+      user: action.data,
+      loading: false
+    };
+    case CLEAR_PROFILE:
+    return {
+      ...state,
+      user: null,
+      loading: false
     };
     default:
      return state

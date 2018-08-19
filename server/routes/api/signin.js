@@ -3,8 +3,12 @@ const UserSession = require('../../models/UserSession');
 const jwt = require('jsonwebtoken');
 const CheckAuth = require('../../models/check-auth');
 var multer  = require('multer');
+const gravatar = require('gravatar');
 const passport = require('passport')
-// const upload = multer({ dest: 'profile/'})
+const express = require('express');
+const router = express.Router();
+
+const config = require('../../../config/config');
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, './profile/')
@@ -18,7 +22,6 @@ var upload = multer({ storage: storage})
 // , limits:{ fileSize: 400 + 400 }
 
 
-module.exports = (app) => {
   // app.get('/api/counters', (req, res, next) => {
   //   Counter.find()
   //     .exec()
@@ -50,7 +53,7 @@ module.exports = (app) => {
   //   });
   // })
 
-  app.post('/api/account/signup', (req, res, next) => {
+  router.post('/signup', (req, res, next) => {
     const { body } = req;
     const { userName, password } = body;
     let { email } = body;
@@ -74,8 +77,6 @@ module.exports = (app) => {
       })
     }
 
-
-
     email = email.toLowerCase();
     // console.log(email)
 
@@ -93,11 +94,17 @@ module.exports = (app) => {
           success: false,
           message: 'Error: Account already exist'
         })
-      }
+      } else {
+      const avatar = gravatar.url(req.body.email, {
+        s: '200', // Size
+        r: 'pg', // Rating
+        d: 'mm' // Default
+      });
 
       const newUser = new User();
       newUser.email = email;
       newUser.userName = userName;
+      newUser.avatar = avatar;
       newUser.password = newUser.generateHash(password);
       newUser.save((err, user) => {
         if(err){
@@ -111,11 +118,12 @@ module.exports = (app) => {
           newUser
         })
       })
-    })
+    }
+  })
 
   });
 
-  app.post('/api/account/signin', (req, res, next) => {
+  router.post('/signin', (req, res, next) => {
     const { body } = req;
     const { password } = body;
     let { email } = body;
@@ -144,7 +152,7 @@ module.exports = (app) => {
       if(users.length < 1){
         return res.status(401).send({
           success: false,
-          message: 'Error Wrong password or email'
+          message: 'Error Wrong email or password'
         })
       }
       // const user = new User()
@@ -153,15 +161,14 @@ module.exports = (app) => {
       const userfield = {
           userName: user.userName,
           isDeleted: user.firstName,
+          avatar: user.avatar,
           id: user._id,
       }
       // req.session.user = user;
-
-
       if(!user.validPassword(password)){
         return res.send({
           success: false,
-          message: 'Error something is not valid in user.validPassword the server'
+          message: 'Error is not valid password'
         })
       }
 
@@ -170,7 +177,7 @@ module.exports = (app) => {
       // const newId = userSession.userId;
       const token = jwt.sign(
         { email: email, userId: user._id },
-        'secret', { expiresIn: "1h" }
+        config.secretOrKey, { expiresIn: 3600 }
       )
       userSession.userId = token;
       // console.log(users.id)
@@ -195,7 +202,7 @@ module.exports = (app) => {
 
   });
 
-  app.post('/api/account/verify', (req, res, next) => {
+  router.post('/verify', (req, res, next) => {
     const { query } = req;
     const { token } = query;
 
@@ -223,7 +230,7 @@ module.exports = (app) => {
     })
   });
 
-  app.get('/api/account/logout', (req, res, next) => {
+  router.get('/logout', (req, res, next) => {
     const { query } = req;
     const { token } = query;
 
@@ -246,48 +253,5 @@ module.exports = (app) => {
     })
   });
 
-  //getting one user
-  app.get('/api/user/:id', (req, res, next) => {
 
-    User.findById(req.params.id)
-    .select('-password')
-    .exec()
-    .then((doc) =>{
-      // console.log(doc)
-      if(!doc){ return res.status(404).end(); }
-      return res.status(200).json(doc)
-    })
-    .catch(err => next(err));
-  });
-
-// CheckAuth,
-
-  app.get('/api/dashboard',  upload.single('avatar'), passport.authenticate('jwt', { session: false }), (req, res, next) => {
-    // console.log(req.user._id)
-    User.findById(req.user._id)
-    .select('-password')
-    .exec()
-    .then((doc) =>{
-      // console.log(doc)
-      if(!doc){ return res.status(404).end(); }
-      return res.status(200).json(doc)
-    })
-    .catch(err => next(err));
-  });
-
-  //
-  // // View messages to and from authenticated user
-  // chatRoutes.get('/', requireAuth, ChatController.getConversations);
-  //
-  // // Retrieve single conversation
-  // chatRoutes.get('/:conversationId', requireAuth, ChatController.getConversation);
-  //
-  // // Send reply in conversation
-  // chatRoutes.post('/:conversationId', requireAuth, ChatController.sendReply);
-  //
-  // // Start new conversation
-  // chatRoutes.post('/new/:recipient', requireAuth, ChatController.newConversation);
-
-
-
-};
+module.exports = router;
