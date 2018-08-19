@@ -5,10 +5,6 @@ const CheckAuth = require('../../models/check-auth');
 const passport = require('passport')
 const express = require('express');
 const router = express.Router();
-/*********************************************
-  this video goes over the API design:
-  https://www.youtube.com/watch?v=gtMZ-WiSrs8
-*********************************************/
 
 
   //post
@@ -36,7 +32,7 @@ const router = express.Router();
 
     Post.find({}).populate({
            path: 'creator',
-           select: 'userName createdAt -_id' //you can use -_id to get rid of the ID
+           select: 'userName createdAt -_id'
          })
          .populate({
            path: 'comments',
@@ -56,7 +52,7 @@ const router = express.Router();
      Post.findById(req.params.id)
      .populate({
        path: 'creator',
-       select: 'userName createdAt ' //you can use -_id to get rid of the ID
+       select: 'userName createdAt '
      })
      .populate({
        path: 'comments',

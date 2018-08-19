@@ -28,11 +28,6 @@ const socketEvents = require('./socketEvents');
 
 // Configuration
 // ================================================================================================
-/*
- comments arent posting under its post ID. June 2
- check out for some guildence info:
- https://github.com/keithweaver/MERN-boilerplate/blob/master/server/routes/api/counters.js
-*/
 
 // Set up Mongoose
 mongoose.connect(isDev ? config.db_dev : config.db);

@@ -37,7 +37,7 @@ const router = express.Router();
   router.get('/', (req, res, next) => {
     Comment.find({}).populate({
            path: 'creator',
-           select: 'userName createdAt _id' //you can use -_id to get rid of the ID
+           select: 'userName createdAt _id'
          })
          .populate({
            path: 'comments',
@@ -54,7 +54,7 @@ const router = express.Router();
      Comment.findById(req.params.id)
      .populate({
        path: 'creator',
-       select: 'userName createdAt ' //you can use -_id to get rid of the ID
+       select: 'userName createdAt ' 
      })
      .populate({
        path: 'comments',
