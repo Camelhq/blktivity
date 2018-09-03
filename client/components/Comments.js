@@ -42,11 +42,13 @@ class Comments extends Component {
   handleSubmit(event) {
     event.preventDefault()
     event.target.reset();
+
     const comment = {
       text: this.state.text,
       postId: this.props.match.params.id,
       userId: this.props.setAuth.user.userId
     }
+    console.log(comment)
     this.props.comment(comment)
   }
 

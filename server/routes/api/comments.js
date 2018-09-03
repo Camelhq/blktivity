@@ -1,13 +1,15 @@
 const User = require('../../models/User');
-const Comment = require('../../models/Comments');
 const Post = require('../../models/Post');
+const Comment = require('../../models/Comments');
 const passport = require('passport')
 const express = require('express');
 const router = express.Router();
 
+
+
   router.post('/', passport.authenticate('jwt', { session: false }), (req, res, next) => {
     const { text, userId, postId } = req.body;
-    // console.log(req.body)
+    console.log(req.body)
     User.findOne(req.user._id).then((user) => {
       // console.log(user)
       const comment = new Comment({
@@ -15,7 +17,7 @@ const router = express.Router();
         creator: userId,
         posts: postId
       })
-      // console.log(comment)
+      console.log(comment)
 
       comment.save().then((newComment) => {
         Post.findByIdAndUpdate(
@@ -54,7 +56,7 @@ const router = express.Router();
      Comment.findById(req.params.id)
      .populate({
        path: 'creator',
-       select: 'userName createdAt ' 
+       select: 'userName createdAt '
      })
      .populate({
        path: 'comments',

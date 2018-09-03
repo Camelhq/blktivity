@@ -1,7 +1,7 @@
 const User = require('../../models/User');
 const Post = require('../../models/Post');
 const Comment = require('../../models/Comments');
-const CheckAuth = require('../../models/check-auth');
+// const CheckAuth = require('../../models/check-auth');
 const passport = require('passport')
 const express = require('express');
 const router = express.Router();

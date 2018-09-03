@@ -1,7 +1,7 @@
 const User = require('../../models/User');
 const UserSession = require('../../models/UserSession');
 const jwt = require('jsonwebtoken');
-const CheckAuth = require('../../models/check-auth');
+// const CheckAuth = require('../../models/check-auth');
 var multer  = require('multer');
 const gravatar = require('gravatar');
 const passport = require('passport')
