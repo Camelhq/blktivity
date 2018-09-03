@@ -14,9 +14,6 @@
   "author": "",
   "license": "ISC",
   "private": true,
-  "engines": {
-    "node": ">=6"
-  },
   "dependencies": {
     "autoprefixer": "^8.2.0",
     "axios": "^0.18.0",

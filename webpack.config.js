@@ -50,12 +50,7 @@ module.exports = {
     // { test: /\.json$/, loader: 'json-loader' }
    ]
  },
- node: {
-   console: false,
-   fs: 'empty',
-   net: 'empty',
-   tls: 'empty'
- },
+
  plugins: [
   new CleanWebpackPlugin(['dist']),
   new HtmlWebpackPlugin({
