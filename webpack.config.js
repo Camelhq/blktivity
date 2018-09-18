@@ -6,11 +6,11 @@ const CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = {
   entry: ['./client/index.js', './client/styles/styles.scss'],
-  devtool: 'cheap-module-source-map',
-  mode: 'production',
+  // devtool: 'cheap-module-source-map',
+  // mode: 'production',
   output: {
-    path: path.resolve(__dirname,'dist/*.*'),
-    filename: '[name].[chunkhash].js',
+    path: path.resolve(__dirname,'dist'),
+    filename: '[name].[hash].js',
     publicPath: '/'
   },
   performance: {
@@ -50,9 +50,12 @@ module.exports = {
     // { test: /\.json$/, loader: 'json-loader' }
    ]
  },
+ devServer: {
+  port: 3000
+},
 
  plugins: [
-  new CleanWebpackPlugin(['dist']),
+  new CleanWebpackPlugin('dist', {}),
   new HtmlWebpackPlugin({
     template: './client/index.html',
     filename: 'index.html',

@@ -1,0 +1,26 @@
+version: 2
+jobs:
+  build:
+    docker:
+    # Primary container image where all steps run.
+     - image: blktivity
+    # Secondary container image on common network.
+     - image: mongo:2.6.8-jessie
+
+
+    steps:
+      # ... steps for building/testing app ...
+      # using docker-compose so I have to use setup_remote_docker https://circleci.com/docs/2.0/building-docker-images/
+      - setup_remote_docker
+      # We enable Docker Layer Caching here to speed up image building.
+          docker_layer_caching: true
+
+     - run: |
+         docker login -u $DOCKER_USER -p $DOCKER_PASS
+         docker run -d --name db company/proprietary-db:1.2.3
+
+     # build the application image
+     - run: docker build -t company/app:$CIRCLE_BRANCH .
+
+     # deploy the image
+     - run: docker push company/app:$CIRCLE_BRANCH

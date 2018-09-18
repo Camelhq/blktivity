@@ -30,7 +30,7 @@ const socketEvents = require('./socketEvents');
 // ================================================================================================
 
 // Set up Mongoose
-mongoose.connect(isDev ? config.db_dev : config.db);
+mongoose.connect(isDev ? config.db_dev : config.db, { useNewUrlParser: true });
 mongoose.Promise = global.Promise;
 
 
@@ -64,36 +64,12 @@ app.use('/api/account', signin);
 
 // API routes
 // require('./routes')(app);
+app.use(express.static('dist'));
+//   app.get('*', function (req, res) {
+//     res.sendFile(path.join(__dirname, '/dist/index.html'));
+//     res.end();
+//   });
 
-if (isDev) {
-  const compiler = webpack(webpackConfig);
-
-  app.use(historyApiFallback({
-    verbose: false
-  }));
-
-  app.use(webpackDevMiddleware(compiler, {
-    publicPath: webpackConfig.output.publicPath,
-    contentBase: path.resolve(__dirname, '/client/index.html'),
-    stats: {
-      colors: true,
-      hash: false,
-      timings: true,
-      chunks: false,
-      chunkModules: false,
-      modules: false
-    }
-  }));
-
-  app.use(webpackHotMiddleware(compiler));
-  app.use(express.static(path.resolve(__dirname, 'dist')));
-} else {
-  app.use(express.static(path.resolve(__dirname, 'dist')));
-  app.get('*', function (req, res) {
-    res.sendFile(path.join(__dirname, '/dist/index.html'));
-    res.end();
-  });
-}
 
 app.listen(port, '0.0.0.0', (err) => {
   if (err) {
