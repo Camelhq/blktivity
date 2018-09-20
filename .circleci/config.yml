@@ -16,19 +16,19 @@ jobs:
           key: js-sdk-dependencies-{{ checksum "package.json" }}
 
   # build on node 8
-  build:
-    docker:
-      - image: circleci/node:8
-    steps:
-      - checkout
-
-      # restore `npm` dependencies cache
-      - restore_cache:
-          keys:
-            - js-sdk-dependencies-{{ checksum "package.json" }}
+  # build:
+  #   docker:
+  #     - image: circleci/node:8
+  #   steps:
+  #     - checkout
+  #
+  #     # restore `npm` dependencies cache
+  #     - restore_cache:
+  #         keys:
+  #           - js-sdk-dependencies-{{ checksum "package.json" }}
 
       # build bundles
-      - run: npm run rollup
+      # - run: npm run rollup
 
   # test on node 8
   test:

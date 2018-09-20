@@ -9,7 +9,7 @@
     "client": "webpack-dev-server --mode development --devtool inline-source-map --hot",
     "server": "nodemon ./server/server.js",
     "dev": "concurrently \"npm run start\" \"npm run client\"",
-    "test": "mocha --compilers js:babel-core/register test/tests.js"
+    "test": "mocha --compilers js:@babel/register test/tests.js"
   },
   "author": "",
   "license": "ISC",
@@ -65,12 +65,12 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.51",
-    "@babel/core": "^7.0.0-beta.52",
+    "@babel/core": "^7.1.0",
     "@babel/node": "^7.0.0-beta.52",
     "@babel/plugin-transform-arrow-functions": "^7.0.0-beta.52",
     "@babel/preset-env": "^7.0.0-beta.51",
     "@babel/preset-react": "^7.0.0-beta.51",
-    "@babel/register": "^7.0.0-beta.51",
+    "@babel/register": "^7.0.0-beta.51S",
     "babel-loader": "^8.0.0-beta.4",
     "babel-plugin-external-helpers": "^6.22.0",
     "babel-plugin-react-html-attrs": "^2.1.0",
