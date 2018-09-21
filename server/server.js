@@ -30,6 +30,12 @@ const socketEvents = require('./socketEvents');
 // ================================================================================================
 
 // Set up Mongoose
+// const env = (db) => {
+//   if(db === db_dev){
+//     config.db_dev
+//   }
+//   return config.db
+// }
 mongoose.connect(isDev ? config.db_dev : config.db, { useNewUrlParser: true });
 mongoose.Promise = global.Promise;
 
