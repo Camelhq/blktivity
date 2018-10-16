@@ -8,6 +8,7 @@ module.exports = {
   entry: ['./client/index.js', './client/styles/styles.scss'],
   // devtool: 'cheap-module-source-map',
   // mode: 'production',
+  mode: 'development',
   output: {
     path: path.resolve(__dirname,'dist'),
     filename: '[name].[hash].js',
@@ -51,6 +52,13 @@ module.exports = {
    ]
  },
  devServer: {
+//    proxy: {
+//   '/api': 'http://localhost:8080',
+//   secure: false
+// },
+  // contentBase: './client/public',
+  // historyApiFallback: true,
+  // historyApiFallback: true,
   port: 3000
 },
 

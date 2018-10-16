@@ -11,7 +11,11 @@ export const AUTH_USER = 'auth_user',
 
 const API_URL = 'http://localhost:8080/api';
 const SIGN_IN = 'http://localhost:8080';
-const CLIENT_ROOT_URL = 'http://localhost:8080';
+/*
+Need to fix this for development and production
+*/
+const CLIENT_ROOT_URL = 'http://localhost:3000';
+
 
 export function errorHandler(dispatch, error, type) {
  let errorMessage = '';
@@ -94,9 +98,9 @@ export function SignInUser({ email, password }) {
      email: email,
      password: password
    }).then(function(response) {
-    //  console.log(response)
+     console.log(response)
      if(response.status === 200){
-
+       // this.props.stripe.createToken({})
         localStorage.setItem('token', response.data.token);
         // dispatch({ type: AUTH_USER });
         window.location.href = CLIENT_ROOT_URL + '/profile';

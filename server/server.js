@@ -23,8 +23,8 @@ const signin = require('./routes/api/signin');
 
 const isDev = process.env.NODE_ENV !== 'production';
 const port  = process.env.PORT || 8080;
-
-const socketEvents = require('./socketEvents');
+require('dotenv').config()
+// const socketEvents = require('./socketEvents');
 
 // Configuration
 // ================================================================================================
@@ -36,25 +36,26 @@ const socketEvents = require('./socketEvents');
 //   }
 //   return config.db
 // }
-mongoose.connect(isDev ? config.db_dev : config.db, { useNewUrlParser: true });
+mongoose.connect(isDev ? process.env.DB_DEV : process.env.DB, { useNewUrlParser: true });
 mongoose.Promise = global.Promise;
 
 
-const io = require('socket.io').listen(8081);
-socketEvents(io);
+// const io = require('socket.io').listen(8081);
+// socketEvents(io);
 
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(express.json());
-// app.use(function (req, res, next) {
-// res.header("Access-Control-Allow-Methods", "POST, PUT, OPTIONS, DELETE, GET");
-// res.header('Access-Control-Allow-Origin', '*');
-// res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-// res.header("Access-Control-Allow-Credentials", true);
-// next();
-// });
+app.use(function (req, res, next) {
+  res.setHeader("Access-Control-Allow-Methods", "POST, PUT, OPTIONS, DELETE, GET");
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  res.setHeader("Access-Control-Allow-Credentials", true);
+  next();
+});
+
 
 //set up passport
 app.use(passport.initialize())

@@ -10,17 +10,17 @@ const router = express.Router();
 
 // CheckAuth,
 
-  // router.get('/dashboard',  upload.single('avatar'), passport.authenticate('jwt', { session: false }), (req, res, next) => {
-  //   // console.log(req.user._id)
-  //   User.findById(req.user._id)
-  //   .select('-password')
-  //   .exec()
-  //   .then((doc) =>{
-  //     // console.log(doc)
-  //     if(!doc){ return res.status(404).end(); }
-  //     return res.status(200).json(doc)
-  //   })
-  //   .catch(err => next(err));
-  // });
+  router.get('/dashboard/payments', passport.authenticate('jwt', { session: false }), (req, res, next) => {
+  
+    // User.findById(req.user._id)
+    // .select('-password')
+    // .exec()
+    // .then((doc) =>{
+    //   // console.log(doc)
+    //   if(!doc){ return res.status(404).end(); }
+    //   return res.status(200).json(doc)
+    // })
+    // .catch(err => next(err));
+  });
 
   module.exports = router;

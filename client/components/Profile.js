@@ -5,6 +5,10 @@ import Test from '../actions/index';
 import NavBar from './NavBar';
 import { userProfile } from '../actions/index'
 
+
+import {StripeProvider} from 'react-stripe-elements';
+import MyStoreCheckout from './MyStoreCheckout';
+
 import '../styles/styles.scss';
 
 class Dashboard extends Component {
@@ -69,6 +73,9 @@ class Dashboard extends Component {
         <NavBar />
         <div>{this.renderProfile()}</div>
         <Link to="/delete-profile">Delete Profile</Link>
+        <StripeProvider apiKey="pk_test_66pFHkzv6P1PkMYZns3SwUjr">
+          <MyStoreCheckout />
+        </StripeProvider>
       </div>
     );
   }

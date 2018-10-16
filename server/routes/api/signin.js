@@ -106,6 +106,7 @@ var upload = multer({ storage: storage})
       newUser.userName = userName;
       newUser.avatar = avatar;
       newUser.password = newUser.generateHash(password);
+
       newUser.save((err, user) => {
         if(err){
           return res.status(500).send({
@@ -124,6 +125,7 @@ var upload = multer({ storage: storage})
   });
 
   router.post('/signin', (req, res, next) => {
+    // console.log(req.body)
     const { body } = req;
     const { password } = body;
     let { email } = body;
@@ -180,8 +182,6 @@ var upload = multer({ storage: storage})
         config.secretOrKey, { expiresIn: 3600 }
       )
       userSession.userId = token;
-      // console.log(users.id)
-
 
       userSession.save((err, doc) => {
         // console.log(doc)

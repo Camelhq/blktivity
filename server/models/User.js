@@ -20,6 +20,11 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  //Stripe customer ID
+  // stripe: {
+  //   type: String,
+  //   required: true
+  // },
   isDeleted: {
     type: Boolean,
     default: false
