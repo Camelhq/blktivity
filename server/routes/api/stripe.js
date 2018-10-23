@@ -1,81 +1,94 @@
-// var stripe = require('stripe')("sk_test_RBh3T1eg50T04QPlU9vMXF2Q");
-// STRIPE_KEY={sk_test_RBh3T1eg50T04QPlU9vMXF2Q}
+const stripe = require('stripe')(process.env.STRIPE);
+const User = require('../../models/User');
+const Profile = require('../../models/Profile');
+require('dotenv').config()
+const UserSession = require('../../models/UserSession');
+const jwt = require('jsonwebtoken');
+const passport = require('passport')
+const express = require('express');
+const router = express.Router();
+
 
 var STRIPE_PAGINATION_LIMIT = 100;
 
-module.exports = (app) => {
+//create a product first
+//
+router.get('/product', passport.authenticate('jwt', { session: false }), (req, res, next) => {
+  stripe.products.list(
+    { limit: 3 },
+    function(err, products) {
+      // asynchronously called
+      if(err){
+        console.log("could not reteive products ", err)
+      }
+      console.log(products)
+    });
+
+});
 
 
-  app.post('/createcustomer', (req, res) => {
+// router.post('/', passport.authenticate('jwt', { session: false }), (req, res, next) => {
+//   const plan = stripe.plans.create({
+//     product: 'prod_CbvTFuXWh7BPJH',
+//     nickname: 'SaaS Platform USD',
+//     currency: 'usd',
+//     interval: 'month',
+//     amount: 10000,
+//   });
+// });
+//
+// router.post('/', passport.authenticate('jwt', { session: false }), (req, res, next) => {
+//   const subscription = stripe.subscriptions.create({
+//     customer: 'cus_4fdAW5ftNQow1a',
+//     items: [{plan: 'plan_CBXbz9i7AIOTzr'}],
+//   });
+// });
+
+
+router.post('/create', passport.authenticate('jwt', { session: false }), (req, res, next) => {
+    const token = req.body.token;
+    if(!token){
+      return res.send({
+        success: "failed",
+        message: "Not a user and No token"
+      })
+    }
+    Profile.findOne({ creator: req.user.id }).then((profile) => {
     stripe.customers.create({
-      description: 'Customer for emma.davis@example.com',
-      source: "tok_mastercard" // obtained with Stripe.js
+      source: token // obtained with Stripe.js
     }, function(err, customer) {
       // asynchronously called
       if(err){
         console.log(err)
       }
-      console.log(customer)
+      // console.log(customer.id)
+      profile.stripeToken = customer.id
+      // console.log(profile)
+      //else add user to USER Model into databaseID
+      // res.json(profile)
     });
+  })
 });
 
-  app.get('/customers', (req, res) => {
-  const options = { limit: STRIPE_PAGINATION_LIMIT }
-  if(req.query.starting_after)
-    options.starting_after = req.query.starting_after
+// router.get('/charges', passport.authenticate('jwt', { session: false }), (req, res, next) => {
+//   const options = { limit: STRIPE_PAGINATION_LIMIT }
+//   if(req.query.starting_after)
+//     options.starting_after = req.query.starting_after
+//
+//   if(req.query.ending_before)
+//     options.ending_before = req.query.ending_before
+//
+//   stripe.charges.list(
+//     options,
+//     function(err, result) {
+//       // asynchronously called
+//       if(!err){
+//         res.json(result);
+//       }
+//     }
+//   );
+// });
+//
 
-  if(req.query.ending_before)
-    options.ending_before = req.query.ending_before
 
-  stripe.customers.list(
-    options,
-    function(err, result) {
-      // asynchronously called
-      console.log(err)
-      if(!err){
-        res.json(result);
-      }
-    }
-  );
-});
-
-
-app.get('/charges', (req, res) => {
-  const options = { limit: STRIPE_PAGINATION_LIMIT }
-  if(req.query.starting_after)
-    options.starting_after = req.query.starting_after
-
-  if(req.query.ending_before)
-    options.ending_before = req.query.ending_before
-
-  stripe.charges.list(
-    options,
-    function(err, result) {
-      // asynchronously called
-      if(!err){
-        res.json(result);
-      }
-    }
-  );
-});
-
-app.get('/customers/:customerId', (req, res) => {
-  stripe.customers.retrieve(
-    req.params.customerId,
-    function(err, customer) {
-      if(!err){
-        res.json(customer);
-      }
-    }
-  );
-});
-
-app.get('/balance', (req, res) => {
-  stripe.balance.retrieve(function(err, balance){
-      if(!err){
-        res.json(balance);
-      }
-    }
-  );
-});
-}
+module.exports = router;

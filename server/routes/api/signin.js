@@ -179,7 +179,7 @@ var upload = multer({ storage: storage})
       // const newId = userSession.userId;
       const token = jwt.sign(
         { email: email, userId: user._id },
-        config.secretOrKey, { expiresIn: 3600 }
+        process.env.SECRET_OR_KEY, { expiresIn: 3600 }
       )
       userSession.userId = token;
 

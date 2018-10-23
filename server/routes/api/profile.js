@@ -36,6 +36,7 @@ const upload = multer({ storage: storage})
 
   //Get current User /api/profile
   router.get('/', passport.authenticate('jwt', { session: false }), (req, res, next) => {
+    // console.log(req.user.id)
     Profile.findOne({creator: req.user.id}).then((profile) => {
       if(!profile){
         return res.status(404).json("error something happen with not getting the current user")

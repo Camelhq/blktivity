@@ -8,8 +8,14 @@ import CardSection from './CardSection';
 class CheckoutForm extends Component {
   constructor(props){
     super(props)
-
+    this.state = {
+      token: ''
+    }
     this.handleSubmit = this.handleSubmit.bind(this)
+  }
+  componentDidMount(){
+    const token = localStorage.getItem('token');
+    this.setState({ token: token})
   }
   handleSubmit(ev){
     // We don't want to let default form submission happen here, which would refresh the page.
@@ -17,8 +23,21 @@ class CheckoutForm extends Component {
 
     // Within the context of `Elements`, this call to createToken knows which Element to
     // tokenize, since there's only one in this group.
-    this.props.stripe.createToken({name: 'Jenny Rosen'}).then(({token}) => {
+    this.props.stripe.createToken({}).then(({token}) => {
       console.log('Received Stripe token:', token);
+      fetch('http://localhost:8080/api/account/create', {
+        //${SIGN_IN}/api/account/signin
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + this.state.token,
+        },
+        body: JSON.stringify({
+          token: token.id
+        })
+      }).then((res) => res.json()).then((response) => {
+        console.log('response', response)
+      })
     });
 
     // However, this line of code will do the same thing:

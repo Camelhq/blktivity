@@ -12,8 +12,8 @@ var ProfileSchema = new mongoose.Schema({
   instagram: { type: String },
   facebook: { type: String },
   twitter: { type: String },
-  bio: { type: String }
-  // work: { type: String }
+  bio: { type: String },
+  stripeToken: { type: String}
 	// comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }]
 });
 

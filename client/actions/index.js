@@ -121,16 +121,20 @@ export function SignInUser({ email, password }) {
   export function userProfile() {
     //this should be profile loading action
     // dispatch(setProfileLoading());
+    // console.log( localStorage.getItem('token'));
    return function(dispatch) {
 
     axios.get(`${SIGN_IN}/api/profile`, {
-      headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token')}
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('token'),
+        "Access-Control-Allow-Headers" : "*"
+      }
       }).then(function(response) {
         // console.log(response.data)
          dispatch(receiveProfile(response.data));
       }).catch((error) => {
-        // console.log(error)
-        dispatch({type: RECEIVE_PROFILE, data: {}});
+        console.log("This is an error for whatever reason", error)
+        // dispatch({type: RECEIVE_PROFILE, data: {}});
       //  errorHandler(dispatch, error.response, AUTH_ERROR)
      });
    }

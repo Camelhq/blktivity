@@ -1,6 +1,4 @@
-var stripe = require("stripe")(
-  "sk_test_RBh3T1eg50T04QPlU9vMXF2Q"
-);
+const stripe = require('stripe')(process.env.STRIPE);
 const moment = require('moment');
 const User = require('./User');
 //
